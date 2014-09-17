@@ -8,6 +8,7 @@ require_once('../model/product_db.php');
 require_once('../model/order_db.php');
 require_once('../model/customer_db.php');
 require_once('../model/address_db.php');
+require_once('../model/email.php');
 
 if (!isset($_SESSION['user'])) {
     $_SESSION['checkout'] = true;
@@ -95,8 +96,9 @@ switch ($action) {
             add_order_item($order_id, $product_id,
                            $item_price, $discount, $quantity);
         }
-        clear_cart();
-        redirect('../account?action=view_order&order_id=' . $order_id);
+        clear_cart(); 
+        sendConfirmEmail($order_id);
+        redirect('../account?action=view_order&order_id=' . $order_id); 
         break;
     default:
         display_error('Unknown cart action: ' . $action);
