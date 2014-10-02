@@ -106,6 +106,17 @@ function get_order($order_id) {
     return $order;
 }
 
+function get_customer_id($order_id) {
+    global $db;
+    $query = 'SELECT * FROM orders WHERE orderID = :order_id LIMIT 1';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':order_id', $order_id);
+    $statement->execute();
+    $order = $statement->fetch();
+    $statement->closeCursor();
+    return $order['customerID'];
+}
+
 function get_order_items($order_id) {
     global $db;
     $query = 'SELECT * FROM OrderItems WHERE orderID = :order_id';

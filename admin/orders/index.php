@@ -7,6 +7,7 @@ require_once('model/customer_db.php');
 require_once('model/address_db.php');
 require_once('model/order_db.php');
 require_once('model/product_db.php');
+require_once('model/email.php');
 
 if ( isset($_POST['action']) ) {
     $action = $_POST['action'];
@@ -60,6 +61,7 @@ switch($action) {
         $order_id = intval($_POST['order_id']);
         set_ship_date($order_id);
         $url = '?action=view_order&order_id=' . $order_id;
+        sendShippingConfirmEmail($order_id);
         redirect($url);
     case 'confirm_delete':
         // Get order data
