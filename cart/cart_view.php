@@ -1,6 +1,9 @@
 <?php include '../view/header.php'; ?>
 <div id="content">
     <h1>Your Cart</h1>
+    <?php if (isset($error)) : ?>
+        <p id="error"><?php echo $error; ?></p>
+    <?php endif; ?>
     <?php if (cart_product_count() == 0) : ?>
         <p>There are no products in your cart.</p>
     <?php else: ?>

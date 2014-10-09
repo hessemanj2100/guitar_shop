@@ -34,6 +34,7 @@ switch ($action) {
         $product_id = $_GET['product_id'];
         $product = get_product($product_id);
         $product_order_count = get_product_order_count($product_id);
+        $qty = $product['qtyOnHand'];
         include('product_view.php');
         break;
     case 'delete_product':

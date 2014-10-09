@@ -20,12 +20,17 @@ switch ($action) {
     case 'add':
         $product_id = $_GET['product_id'];
         $quantity = $_GET['quantity'];
+        $product = get_product($product_id);
 
         // validate the quantity entry
+        
         if (empty($quantity)) {
             display_error('You must enter a quantity.');
         } elseif (!is_valid_number($quantity, 1)) {
             display_error('Quantity must be 1 or more.');
+        } elseif ($quantity > $product['qtyOnHand']) {
+            $error = 'Amount exceeds whats available!';
+            $quantity = $product['qtyOnHand'];
         }
 
         cart_add_item($product_id, $quantity);

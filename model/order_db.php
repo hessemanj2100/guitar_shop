@@ -93,6 +93,8 @@ function add_order_item($order_id, $product_id,
     $statement->bindValue(':quantity', $quantity);
     $statement->execute();
     $statement->closeCursor();
+    
+    add_qty_pending($product_id, $quantity);
 }
 
 function get_order($order_id) {
@@ -178,14 +180,29 @@ function set_ship_date($order_id) {
     $statement->bindValue(':order_id', $order_id);
     $statement->execute();
     $statement->closeCursor();
+    
+    $items = get_order_items($order_id);
+    foreach ($items as $item) {
+        sub_qty_pending($item['productID'], $item['quantity']); 
+        sub_qty_on_hand($item['productID'], $item['quantity']); 
+        
+    }
 }
-
 function delete_order($order_id) {
     global $db;
+    $items = get_order_items($order_id);
+    foreach ($items as $item) {
+        sub_qty_pending($item['productID'], $item['quantity']);
+    }
+    $query = 'DELETE FROM orderitems WHERE orderID = :order_id';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':order_id', $order_id);
+    $statement->execute();
     $query = 'DELETE FROM orders WHERE orderID = :order_id';
     $statement = $db->prepare($query);
     $statement->bindValue(':order_id', $order_id);
     $statement->execute();
     $statement->closeCursor();
+    
 }
 ?>

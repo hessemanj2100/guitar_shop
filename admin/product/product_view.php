@@ -4,7 +4,7 @@
     <h1>Product Manager - View Product</h1>
     
     <!-- display product -->
-    <?php include '../../view/product.php'; ?>
+    <?php include '../../view/admin_product.php'; ?>
 
     <!-- display buttons -->
     <br />

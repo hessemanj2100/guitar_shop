@@ -132,4 +132,86 @@ function delete_product($product_id) {
         display_db_error($error_message);
     }
 }
+function add_qty_on_hand($product_id, $qty)
+{
+    global $db;
+    $product = get_product($product_id);
+    $qty = $product['qtyOnHand'] + $qty;
+    $query = '
+        UPDATE Products
+        SET qtyOnHand = :qtyOnHand
+        WHERE productID = :product_id';
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':qtyOnHand', $qty);
+        $statement->bindValue(':product_id', $product_id);
+        $statement->execute();
+        $statement->closeCursor();
+    } catch (PDOException $e) {
+        $error_message = $e->getMessage();
+        display_db_error($error_message);
+    }
+}
+function sub_qty_on_hand($product_id, $qty)
+{
+    global $db;
+    $product = get_product($product_id);
+    $qty = $product['qtyOnHand'] - $qty;
+    $query = '
+        UPDATE Products
+        SET qtyOnHand = :qtyOnHand
+        WHERE productID = :product_id';
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':qtyOnHand', $qty);
+        $statement->bindValue(':product_id', $product_id);
+        $statement->execute();
+        $statement->closeCursor();
+    } catch (PDOException $e) {
+        $error_message = $e->getMessage();
+        display_db_error($error_message);
+    }
+}
+function add_qty_pending($product_id, $qty)
+{
+    global $db;
+    $product = get_product($product_id);
+    $qty = $product['pending'] + $qty;  
+    $query = '
+        UPDATE Products
+        SET pending = :pending
+        WHERE productID = :product_id';
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':pending', $qty);
+        $statement->bindValue(':product_id', $product_id);
+        $statement->execute();
+        $statement->closeCursor();
+    } catch (PDOException $e) {
+        $error_message = $e->getMessage();
+        display_db_error($error_message);
+    }
+}
+function sub_qty_pending($product_id, $qty)
+{
+    global $db;
+    $product = get_product($product_id);
+    $qty = $product['pending'] - $qty;  
+    $query = '
+        UPDATE Products
+        SET pending = :pending
+        WHERE productID = :product_id';
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':pending', $qty);
+        $statement->bindValue(':product_id', $product_id);
+        $statement->execute();
+        $statement->closeCursor();
+    } catch (PDOException $e) {
+        $error_message = $e->getMessage();
+        display_db_error($error_message);
+    }
+    
+}
+
 ?>

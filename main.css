@@ -234,3 +234,7 @@ br {
 #add_category input { 
     margin-right: .25em;
 }
+
+#error { 
+    color: red;
+}

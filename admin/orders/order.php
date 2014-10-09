@@ -10,12 +10,6 @@
         <p>Ship Date: Not yet shipped</p>
         <p>
             <form action="" method="post" >
-                <input type="hidden" name="action" value="set_ship_date" />
-                <input type="hidden" name="order_id"
-                       value="<?php echo $order_id; ?>" />
-                <input type="submit" value="Ship Order" />
-            </form>
-            <form action="" method="post" >
                 <input type="hidden" name="action" value="confirm_delete" />
                 <input type="hidden" name="order_id"
                        value="<?php echo $order_id; ?>" />

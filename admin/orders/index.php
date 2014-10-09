@@ -73,6 +73,8 @@ switch($action) {
         $customer = get_customer($order['customerID']);
         $name = $customer['lastName'] . ', ' . $customer['firstName'];
         $email = $customer['emailAddress'];
+        
+        
 
         include 'confirm_delete.php';
         break;

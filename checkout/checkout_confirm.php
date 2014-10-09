@@ -1,3 +1,5 @@
+
+
 <?php include '../view/header.php'; ?>
 <div id="content">
     <h1>Confirm Order</h1>
