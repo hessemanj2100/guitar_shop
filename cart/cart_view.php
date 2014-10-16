@@ -16,10 +16,24 @@
                 <th class="right">Price</th>
                 <th class="right">Quantity</th>
                 <th class="right">Total</th>
-            </tr>
+                </tr>
             <?php foreach ($cart as $product_id => $item) : ?>
+            <?php
+            $error = false;
+            $product = get_product($product_id);
+            $available_stock = $product['qtyOnHand'] - $product['pending'];
+            if ($item['quantity'] > $available_stock) {
+                $item['quantity'] = $available_stock;
+                cart_update_item($product_id, $item['quantity']);
+                $error = true;
+            }
+            ?>
             <tr>
-                <td><?php echo $item['name']; ?></td>
+                <td><?php echo $item['name']; ?>
+                    <?php if ($error) : ?>
+                        <br><span class="error">Quantity exceeds available stock. <b>Quantity adjusted</b>.</span>
+                    <?php endif; ?>
+                </td>
                 <td class="right">
                     <?php echo sprintf('$%.2f', $item['unit_price']); ?>
                 </td>

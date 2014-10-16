@@ -6,6 +6,8 @@
     $description = $product['description'];
     $list_price = $product['listPrice'];
     $discount_percent = $product['discountPercent'];
+    $pending= $product['pending'];
+    $available_stock = $product['qtyOnHand'] - $product['pending'];
 
     // Add HMTL tags to the description
     $description = add_tags($description);
@@ -42,6 +44,10 @@
         <?php echo '$' . $discount_amount; ?>)</p>
     <p><b>Quantity on Hand:</b>
         <?php echo $qty; ?></p>
+    <p><b>Pending Shipment:</b>
+        <?php echo $pending; ?></p>
+    <p><b>Available Stock: </b>
+        <?php echo $available_stock; ?></p>
     <h2>Description</h2>
     <?php echo $description; ?>
 </div>

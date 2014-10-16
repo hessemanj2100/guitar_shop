@@ -28,9 +28,6 @@ switch ($action) {
             display_error('You must enter a quantity.');
         } elseif (!is_valid_number($quantity, 1)) {
             display_error('Quantity must be 1 or more.');
-        } elseif ($quantity > $product['qtyOnHand']) {
-            $error = 'Amount exceeds whats available!';
-            $quantity = $product['qtyOnHand'];
         }
 
         cart_add_item($product_id, $quantity);

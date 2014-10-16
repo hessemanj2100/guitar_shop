@@ -6,6 +6,8 @@
     $description = $product['description'];
     $list_price = $product['listPrice'];
     $discount_percent = $product['discountPercent'];
+    $available_stock = $product['qtyOnHand'] - $product['pending'];
+    
 
     // Add HMTL tags to the description
     $description = add_tags($description);
@@ -40,14 +42,21 @@
         <?php echo '$' . $unit_price; ?>
         (You save
         <?php echo '$' . $discount_amount; ?>)</p>
-    <form action="<?php echo $app_path . 'cart' ?>" method="get" id="add_to_cart_form">
-        <input type="hidden" name="action" value="add" />
-        <input type="hidden" name="product_id"
-               value="<?php echo $product_id; ?>" />
-        <b>Quantity:</b>&nbsp;
-        <input type="text" name="quantity" value="1" size="2" />
-        <input type="submit" value="Add to Cart" />
-    </form>
+    <?php if ($available_stock == 0) : ?>
+        <p class="zero_stock">Out of Stock!</p>
+    <?php else: ?>
+        <?php if ($available_stock < 5) : ?>
+        <p class="limited_stock">Only <?php echo $available_stock; ?> left in stock.</p>
+        <?php endif; ?>
+        <form action="<?php echo $app_path . 'cart' ?>" method="get" id="add_to_cart_form">
+            <input type="hidden" name="action" value="add" />
+            <input type="hidden" name="product_id"
+                   value="<?php echo $product_id; ?>" />
+            <b>Quantity:</b>&nbsp;
+            <input type="text" name="quantity" value="1" size="2" />
+            <input type="submit" value="Add to Cart" />
+        </form>
+    <?php endif; ?>
     <h2>Description</h2>
     <?php echo $description; ?>
 </div>

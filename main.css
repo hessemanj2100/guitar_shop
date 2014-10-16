@@ -235,6 +235,22 @@ br {
     margin-right: .25em;
 }
 
-#error { 
+.error { 
     color: red;
+    font-size: .8em;
+}
+
+.zero_stock {
+    color: red;
+    font-weight: bold;
+}
+
+.limited_stock {
+    color: green;
+    font-weight: bold;
+}
+
+@media print {
+    body { background:white; color:black; margin:0 }
+    #sidebar {display:none;}
 }
