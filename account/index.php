@@ -6,6 +6,12 @@ require_once('model/customer_db.php');
 require_once('model/address_db.php');
 require_once('model/order_db.php');
 require_once('model/product_db.php');
+require_once('model/admin_db.php');
+
+// log the admin out if logged in
+if (isset($_SESSION['admin'])) {
+    unset($_SESSION['admin']);
+}
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -170,16 +176,22 @@ switch ($action) {
         // TODO: Improve this validation
         if (is_valid_customer_login($email, $password)) {
             $_SESSION['user'] = get_customer_by_email($email);
+        } else if (is_valid_admin_login($email, $password)) {
+            $_SESSION['admin'] = get_admin_by_email($email);
         } else {
             display_error('Login failed. Invalid email or password.');
         }
 
         // If necessary, redirect to the Checkout app
-        if (isset($_SESSION['checkout'])) {
+        if (isset($_SESSION['user']) && isset($_SESSION['checkout'])) {
             unset($_SESSION['checkout']);
             redirect('../checkout');
         } else {
-            redirect('.');
+            if (isset($_SESSION['admin'])) {
+                redirect('../admin');
+            } else {
+                redirect('.');
+            }
         }
         break;
     case 'view_account':

@@ -2,6 +2,11 @@
     require_once('../util/main.php');
 //    require_once('../util/secure_conn.php');
 //    require_once('../util/valid_admin.php');
+    
+if (!isset($_SESSION['admin'])) {
+    display_error('You cannot login to the admin section while ' .
+                  'logged in as a customer.');
+}
 ?>
 <?php 
     include 'view/header.php';

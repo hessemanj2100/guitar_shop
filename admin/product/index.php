@@ -6,6 +6,11 @@ require_once('util/images.php');
 require_once('model/product_db.php');
 require_once('model/category_db.php');
 
+if (!isset($_SESSION['admin'])) {
+    display_error('You cannot login to the admin section while ' .
+                  'logged in as a customer.');
+}
+
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
 } else if (isset($_GET['action'])) {

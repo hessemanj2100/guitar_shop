@@ -9,6 +9,11 @@ require_once('model/order_db.php');
 require_once('model/product_db.php');
 require_once('model/email.php');
 
+if (!isset($_SESSION['admin'])) {
+    display_error('You cannot login to the admin section while ' .
+                  'logged in as a customer.');
+}
+
 if ( isset($_POST['action']) ) {
     $action = $_POST['action'];
 } elseif ( isset($_GET['action']) ) {
